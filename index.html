@@ -56,7 +56,6 @@
             width: 100%;
         }
 
-        /* main content — fills viewport, relative for absolute positioning */
         .main-content {
             flex: 1;
             display: flex;
@@ -177,7 +176,6 @@
             height: 100%;
         }
 
-        /* enterprise card */
         .enterprise-card {
             max-width: 1000px;
             width: 100%;
@@ -261,7 +259,7 @@
             letter-spacing: -0.01em;
         }
 
-        /* ===== UPDATED HEADLINE MESSAGE (professional tone) ===== */
+        /* ===== RESPONSIVE HEADLINE MESSAGE - CONSISTENT LAYOUT ===== */
         .headline-message {
             font-size: 1.15rem;
             color: var(--gray-500);
@@ -276,10 +274,91 @@
             box-shadow: var(--shadow-lg);
         }
 
-        .headline-message i {
+        /* Message row with icon and content - flex column on mobile, row on desktop */
+        .message-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .message-row:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .message-icon {
             color: var(--primary);
-            margin-right: 12px;
             font-size: 1.1rem;
+            width: 24px;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex: 1;
+            font-size: 1.15rem;
+        }
+
+        .launch-badge {
+            display: inline-block;
+            background: rgba(139, 115, 85, 0.1);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 1.15rem;
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+
+        .divider {
+            border-top: 1px dashed var(--primary-light);
+            margin: 16px 0;
+        }
+
+        /* Desktop: row layout with icon and content side by side */
+        @media (min-width: 768px) {
+            .message-row {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .launch-badge {
+                margin-top: 0;
+                margin-left: 8px;
+            }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .headline-message {
+                padding: 16px 20px;
+            }
+            
+            .message-content {
+                font-size: 1rem;
+            }
+            
+            .launch-badge {
+                font-size: 1rem;
+                white-space: normal;
+                display: block;
+                margin-left: 0;
+                margin-top: 8px;
+                text-align: center;
+            }
+            
+            .divider {
+                margin: 14px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .message-content {
+                font-size: 0.95rem;
+            }
+            
+            .launch-badge {
+                font-size: 0.95rem;
+            }
         }
 
         .contact-section {
@@ -540,7 +619,6 @@
             to { opacity: 1; }
         }
 
-        /* responsiveness for the top-right indicator */
         @media (max-width: 900px) {
             .scroll-indicator-top-right {
                 top: 24px;
@@ -556,7 +634,6 @@
             .card-header { padding: 30px 24px; }
             .headline-main { font-size: 2.4rem; }
             .headline-main span { font-size: 1.7rem; }
-            .headline-message { font-size: 1rem; padding: 14px 20px; }
             .enterprise-grid { grid-template-columns: 1fr; gap: 20px; }
             .contact-section { padding: 32px 24px; }
             .status-bar { flex-direction: column; align-items: flex-start; padding: 20px 24px; }
@@ -587,9 +664,7 @@
 </head>
 <body>
 
-    <!-- main landing - full viewport with top-right fashionable scroll -->
     <div class="main-content" id="top">
-        <!-- SLICK, MINIMAL TOP-RIGHT SCROLL INDICATOR -->
         <div class="scroll-indicator-top-right">
             <a href="#footer-section">
                 <div class="scroll-line">
@@ -618,20 +693,23 @@
                             <span>fintech platform</span>
                         </h1>
                         
-                        <!-- PROFESSIONALLY PARAPHRASED MESSAGE -->
-                   <!-- PROFESSIONALLY PARAPHRASED MESSAGE -->
-                        <!-- PROFESSIONALLY PARAPHRASED MESSAGE -->
+                        <!-- PROFESSIONALLY PARAPHRASED MESSAGE - RESPONSIVE LAYOUT -->
                         <div class="headline-message">
-                            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-                                <i class="fa-regular fa-compass" style="margin-top: 4px;"></i>
-                                <div style="flex: 1; font-size: 1.15rem;">
-                                    <strong>Bypassing traditional funding</strong> — bypassing traditional funding mechanisms and tapping into digital market. 
-                                    <span style="display: inline-block; background: rgba(139, 115, 85, 0.1); padding: 4px 12px; border-radius: 40px; font-size: 1.15rem; margin-left: 8px; white-space: nowrap;">Launching Q3 2026</span>
+                            <!-- First row: Bypassing traditional funding -->
+                            <div class="message-row">
+                                <i class="fa-regular fa-compass message-icon"></i>
+                                <div class="message-content">
+                                    <strong>Bypassing traditional funding</strong> — bypassing traditional funding mechanisms and tapping into digital market.
+                                    <span class="launch-badge">Launching Q3 2026</span>
                                 </div>
                             </div>
-                            <div style="border-top: 1px dashed var(--primary-light); padding-top: 16px; display: flex; gap: 12px;">
-                                <i class="fa-regular fa-calendar-clock" style="margin-top: 4px;"></i>
-                                <div style="flex: 1; font-size: 1.15rem; color: var(--gray-600);">
+                            
+                            <div class="divider"></div>
+                            
+                            <!-- Second row: Schedule revamp -->
+                            <div class="message-row">
+                                <i class="fa-regular fa-calendar-clock message-icon"></i>
+                                <div class="message-content" style="color: var(--gray-600);">
                                     <strong>Schedule revamp in progress</strong> — we are currently undergoing a scheduled revamp to serve you better. We will go-live soon.
                                 </div>
                             </div>
@@ -639,14 +717,12 @@
                     </div>
                 </div>
 
-                <!-- contact grid -->
                 <div class="contact-section">
                     <div class="section-label">
                         <span>authorised contact channels</span>
                     </div>
                     
                     <div class="enterprise-grid">
-                        <!-- principal / admin -->
                         <div class="enterprise-card-item">
                             <div class="card-icon">
                                 <i class="fas fa-user-tie"></i>
@@ -658,7 +734,6 @@
                             </div>
                         </div>
 
-                        <!-- emails -->
                         <div class="enterprise-card-item">
                             <div class="card-icon">
                                 <i class="fas fa-envelope-open-text"></i>
@@ -678,7 +753,6 @@
                             </div>
                         </div>
 
-                        <!-- phone -->
                         <div class="enterprise-card-item">
                             <div class="card-icon">
                                 <i class="fas fa-phone-alt"></i>
@@ -693,7 +767,6 @@
                     </div>
                 </div>
 
-                <!-- status bar -->
                 <div class="status-bar">
                     <div class="status-indicator">
                         <span class="status-dot"></span>
@@ -707,7 +780,6 @@
         </div>
     </div>
 
-    <!-- footer with id for anchor -->
     <footer class="footer" id="footer-section">
         <div class="footer-container">
             <div class="footer-left">
@@ -728,7 +800,6 @@
         (function() {
             console.log('%c🏦 ADS Fintech · Institutional build', 'background: #8B7355; color: white; padding: 4px 10px; border-radius: 20px; font-weight: 600;');
 
-            // make emails clickable
             document.querySelectorAll('.email-item').forEach(item => {
                 const email = item.innerText.trim();
                 if (email.includes('@')) {
@@ -740,7 +811,6 @@
                 }
             });
 
-            // phone click
             const phoneEl = document.querySelector('.card-content .value');
             if (phoneEl && phoneEl.innerText.includes('065')) {
                 phoneEl.addEventListener('click', () => {
@@ -750,7 +820,6 @@
                 phoneEl.style.cursor = 'copy';
             }
 
-            // smooth scroll for top-right indicator
             const scrollLink = document.querySelector('.scroll-indicator-top-right a');
             if (scrollLink) {
                 scrollLink.addEventListener('click', function(e) {
