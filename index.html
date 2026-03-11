@@ -32,6 +32,11 @@
             --gray-500: #667085;
             --shadow-xl: 0 32px 64px rgba(0,0,0,0.12);
             --shadow-lg: 0 20px 48px rgba(0,0,0,0.08);
+            --cream: #faf7f2;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -51,16 +56,128 @@
             width: 100%;
         }
 
-        /* main content — fills viewport, navbar removed */
+        /* main content — fills viewport, relative for absolute positioning */
         .main-content {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 0 60px;
+            padding: 20px 0 40px;
             background: linear-gradient(145deg, #ffffff 0%, #f5f7fa 100%);
+            position: relative;
+            min-height: 100vh;
         }
 
+        /* ===== FASHIONABLE TOP-RIGHT SCROLL INDICATOR ===== */
+        .scroll-indicator-top-right {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-line {
+            width: 1.5px;
+            height: 70px;
+            background: linear-gradient(180deg, 
+                var(--primary-light) 0%, 
+                rgba(139, 115, 85, 0.3) 70%, 
+                rgba(139, 115, 85, 0.1) 100%);
+            position: relative;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(139, 115, 85, 0.2);
+        }
+
+        .moving-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            animation: glideDownTop 2.2s cubic-bezier(0.45, 0, 0.1, 1) infinite;
+            box-shadow: 0 0 12px var(--primary-light);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .moving-dot::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            background: rgba(139, 115, 85, 0.2);
+            border-radius: 50%;
+            z-index: -1;
+            animation: softPulse 2.2s infinite;
+        }
+
+        .scroll-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary-dark);
+            font-weight: 500;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            padding: 4px 0;
+        }
+
+        .scroll-indicator-top-right:hover .scroll-label {
+            opacity: 1;
+        }
+
+        .scroll-indicator-top-right:hover .moving-dot {
+            animation-duration: 1.6s;
+        }
+
+        @keyframes glideDownTop {
+            0% {
+                top: 0%;
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                top: 85%;
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1.1);
+            }
+            100% {
+                top: 0%;
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        @keyframes softPulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .scroll-indicator-top-right a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* enterprise card */
         .enterprise-card {
             max-width: 1000px;
             width: 100%;
@@ -73,82 +190,57 @@
             animation: fadeInUp 0.7s ease-out;
         }
 
-        /* ===== HEADER ===== */
         .card-header {
-            padding: 56px 48px 40px;
+            padding: 40px 48px 30px;
             background: linear-gradient(145deg, #FFFFFF 0%, #fcfdff 100%);
             border-bottom: 1px solid var(--gray-200);
+        }
+
+        .pre-headline-top {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .pre-headline-top span {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--primary-subtle);
+            border-radius: 40px;
         }
 
         .logo-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
 
         .logo-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    width: 320px;  /* Increased from auto to fixed larger width */
-    max-width: none; /* Remove the previous max-width constraint */
-}
+            max-width: 100%;
+            height: auto;
+            display: block;
+            width: 200px;
+        }
 
-/* Optional: if you want even larger logo on desktop */
-@media (min-width: 768px) {
-    .logo-image {
-        width: 400px;  /* Even larger on desktop */
-    }
-}
-
-/* Adjust container to accommodate larger logo */
-.logo-img-placeholder {
-    width: auto;  /* Remove fixed width constraint */
-    padding: 0 20px;  /* Add some side padding */
-}
+        @media (min-width: 768px) {
+            .logo-image {
+                width: 240px;
+            }
+        }
 
         .logo-img-placeholder {
-            width: 200px;
-            height: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-glyph {
-            font-size: 3rem;
-            font-weight: 300;
-            color: var(--primary);
-            letter-spacing: 4px;
-            background: var(--primary-subtle);
-            padding: 8px 24px;
-            border-radius: 80px;
-            border: 1px dashed var(--primary-light);
-        }
-
-        .logo-glyph span {
-            font-weight: 700;
-            color: var(--primary-dark);
+            width: auto;
+            padding: 0 10px;
         }
 
         .headline-container {
             text-align: center;
             max-width: 720px;
             margin: 0 auto;
-        }
-
-        .pre-headline {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: inline-block;
-            padding: 6px 16px;
-            background: var(--primary-subtle);
-            border-radius: 40px;
         }
 
         .headline-main {
@@ -160,9 +252,6 @@
             letter-spacing: -0.02em;
         }
 
-        
-
-
         .headline-main span {
             color: var(--primary);
             display: block;
@@ -172,6 +261,7 @@
             letter-spacing: -0.01em;
         }
 
+        /* ===== UPDATED HEADLINE MESSAGE (professional tone) ===== */
         .headline-message {
             font-size: 1.15rem;
             color: var(--gray-500);
@@ -192,7 +282,6 @@
             font-size: 1.1rem;
         }
 
-        /* ===== CONTACT CARDS (professional fintech grid) ===== */
         .contact-section {
             padding: 48px 48px 40px;
             background: var(--white);
@@ -316,7 +405,6 @@
             border-color: var(--primary-light);
         }
 
-        /* ===== STATUS & BADGE ===== */
         .status-bar {
             padding: 24px 48px;
             background: var(--gray-50);
@@ -379,7 +467,6 @@
             margin-right: 6px;
         }
 
-        /* ===== FOOTER (professional, subtle) ===== */
         .footer {
             background: var(--navy);
             color: var(--white);
@@ -431,7 +518,6 @@
             width: 100%;
         }
 
-        /* animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
@@ -454,15 +540,20 @@
             to { opacity: 1; }
         }
 
-        /* responsiveness */
-        @media (max-width: 1024px) {
-            .headline-main { font-size: 2.8rem; }
-            .headline-main span { font-size: 2rem; }
+        /* responsiveness for the top-right indicator */
+        @media (max-width: 900px) {
+            .scroll-indicator-top-right {
+                top: 24px;
+                right: 24px;
+            }
+            .scroll-line {
+                height: 60px;
+            }
         }
 
         @media (max-width: 768px) {
             .container { padding: 0 24px; }
-            .card-header { padding: 40px 24px; }
+            .card-header { padding: 30px 24px; }
             .headline-main { font-size: 2.4rem; }
             .headline-main span { font-size: 1.7rem; }
             .headline-message { font-size: 1rem; padding: 14px 20px; }
@@ -470,24 +561,51 @@
             .contact-section { padding: 32px 24px; }
             .status-bar { flex-direction: column; align-items: flex-start; padding: 20px 24px; }
             .footer-container { flex-direction: column; text-align: center; }
+            
+            .scroll-indicator-top-right {
+                top: 16px;
+                right: 16px;
+            }
+            .scroll-line {
+                height: 50px;
+            }
+            .moving-dot {
+                width: 6px;
+                height: 6px;
+            }
+            .scroll-label {
+                font-size: 0.6rem;
+                letter-spacing: 3px;
+            }
         }
 
         @media (max-width: 480px) {
             .headline-main { font-size: 2rem; }
             .headline-main span { font-size: 1.4rem; }
-            .logo-glyph { font-size: 2.4rem; padding: 4px 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- main landing - no navbar -->
-    <div class="main-content">
+    <!-- main landing - full viewport with top-right fashionable scroll -->
+    <div class="main-content" id="top">
+        <!-- SLICK, MINIMAL TOP-RIGHT SCROLL INDICATOR -->
+        <div class="scroll-indicator-top-right">
+            <a href="#footer-section">
+                <div class="scroll-line">
+                    <div class="moving-dot"></div>
+                </div>
+                <span class="scroll-label">scroll</span>
+            </a>
+        </div>
+
         <div class="container">
             <div class="enterprise-card">
-
-                <!-- header: brand + coming soon message -->
                 <div class="card-header">
+                    <div class="pre-headline-top">
+                        <span>institutional launch · q3 2026</span>
+                    </div>
+
                     <div class="logo-container">
                         <div class="logo-img-placeholder">
                             <img src="/assets/images/IMG-20251021-WA0002-removebg-preview.png" alt="Company Logo" class="logo-image">
@@ -495,20 +613,33 @@
                     </div>
                     
                     <div class="headline-container">
-                        <span class="pre-headline">institutional launch · q2 2026</span>
                         <h1 class="headline-main">
                             African Development Scheme
                             <span>fintech platform</span>
                         </h1>
                         
+                        <!-- PROFESSIONALLY PARAPHRASED MESSAGE -->
+                   <!-- PROFESSIONALLY PARAPHRASED MESSAGE -->
+                        <!-- PROFESSIONALLY PARAPHRASED MESSAGE -->
                         <div class="headline-message">
-                            <i class="fa-regular fa-clock"></i>
-                            <strong>Under development</strong> — we are building the next generation of cross‑border fintech infrastructure for African enterprises. Registration opens soon.
+                            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                <i class="fa-regular fa-compass" style="margin-top: 4px;"></i>
+                                <div style="flex: 1; font-size: 1.15rem;">
+                                    <strong>Bypassing traditional funding</strong> — bypassing traditional funding mechanisms and tapping into digital market. 
+                                    <span style="display: inline-block; background: rgba(139, 115, 85, 0.1); padding: 4px 12px; border-radius: 40px; font-size: 1.15rem; margin-left: 8px; white-space: nowrap;">Launching Q3 2026</span>
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed var(--primary-light); padding-top: 16px; display: flex; gap: 12px;">
+                                <i class="fa-regular fa-calendar-clock" style="margin-top: 4px;"></i>
+                                <div style="flex: 1; font-size: 1.15rem; color: var(--gray-600);">
+                                    <strong>Schedule revamp in progress</strong> — we are currently undergoing a scheduled revamp to serve you better. We will go-live soon.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- contact grid (enterprise level) -->
+                <!-- contact grid -->
                 <div class="contact-section">
                     <div class="section-label">
                         <span>authorised contact channels</span>
@@ -527,7 +658,7 @@
                             </div>
                         </div>
 
-                        <!-- emails (key contacts) -->
+                        <!-- emails -->
                         <div class="enterprise-card-item">
                             <div class="card-icon">
                                 <i class="fas fa-envelope-open-text"></i>
@@ -547,7 +678,7 @@
                             </div>
                         </div>
 
-                        <!-- phone / direct -->
+                        <!-- phone -->
                         <div class="enterprise-card-item">
                             <div class="card-icon">
                                 <i class="fas fa-phone-alt"></i>
@@ -562,22 +693,22 @@
                     </div>
                 </div>
 
-                <!-- status bar: maintenance + badge -->
+                <!-- status bar -->
                 <div class="status-bar">
                     <div class="status-indicator">
                         <span class="status-dot"></span>
-                        <span class="status-text">platform status: <span>active development · private beta</span></span>
+                        <span class="status-text">platform status: <span>commercialisation phase</span></span>
                     </div>
                     <div class="badge">
-                        <i class="fas fa-rocket"></i> q2 2026 launch
+                        <i class="fas fa-rocket"></i> q3 2026 launch
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- professional footer -->
-    <footer class="footer">
+    <!-- footer with id for anchor -->
+    <footer class="footer" id="footer-section">
         <div class="footer-container">
             <div class="footer-left">
                 <p>© 2026 · all rights reserved by <span class="company">African Development Scheme (Pty) Ltd</span></p>
@@ -595,21 +726,9 @@
 
     <script>
         (function() {
-            // subtle enterprise console log
-            console.log('%c🏦 ADS Fintech (coming soon) · Institutional build', 'background: #8B7355; color: white; padding: 4px 10px; border-radius: 20px; font-weight: 600;');
-            console.log('%c⏳ target launch: Q2 2026 · all systems in development', 'color: #5D4A36; font-style: italic;');
+            console.log('%c🏦 ADS Fintech · Institutional build', 'background: #8B7355; color: white; padding: 4px 10px; border-radius: 20px; font-weight: 600;');
 
-            // optional: add gentle hover effect on contact cards (already in css)
-            // keep smooth scroll for any anchor (none present, but future proof)
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) target.scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-
-            // make emails clickable (mailto)
+            // make emails clickable
             document.querySelectorAll('.email-item').forEach(item => {
                 const email = item.innerText.trim();
                 if (email.includes('@')) {
@@ -629,6 +748,18 @@
                     alert('📋 number copied (international format: +27 65 824 4709)');
                 });
                 phoneEl.style.cursor = 'copy';
+            }
+
+            // smooth scroll for top-right indicator
+            const scrollLink = document.querySelector('.scroll-indicator-top-right a');
+            if (scrollLink) {
+                scrollLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
             }
         })();
     </script>
