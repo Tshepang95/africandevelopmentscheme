@@ -32,7 +32,6 @@
             --gray-500: #667085;
             --shadow-xl: 0 32px 64px rgba(0,0,0,0.12);
             --shadow-lg: 0 20px 48px rgba(0,0,0,0.08);
-            --cream: #faf7f2;
         }
 
         html {
@@ -48,6 +47,7 @@
             color: var(--black);
             line-height: 1.5;
             height: 100%;
+            position: relative;
         }
 
         /* two distinct pages = snap containers */
@@ -64,7 +64,6 @@
             padding: 24px 0;
         }
 
-        /* second page gets a subtle different background to enhance page separation */
         .page-contact {
             background: linear-gradient(135deg, #f9f6f0 0%, #ffffff 100%);
             position: relative;
@@ -88,6 +87,155 @@
             z-index: 5;
         }
 
+        /* ===== FULL-HEIGHT TOP-RIGHT SCROLL INDICATOR ===== */
+        .scroll-indicator-full {
+            position: fixed;
+            top: 0;
+            right: 32px;
+            width: 48px;
+            height: 100vh;              /* spans entire viewport height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;     /* centers the line + dot vertically */
+            z-index: 1000;
+            pointer-events: none;        /* allows clicking through to content, but anchor inside is clickable */
+        }
+
+        .indicator-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            pointer-events: auto;        /* makes the link clickable */
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            padding: 20px 0;
+            background: transparent;
+        }
+
+        .indicator-inner:hover {
+            transform: scale(1.05);
+        }
+
+        .scroll-line-extended {
+            width: 2px;
+            height: 160px;                /* tall line — feels like a scroll tracker */
+            background: linear-gradient(180deg, 
+                var(--primary) 0%, 
+                var(--primary-light) 40%, 
+                rgba(139, 115, 85, 0.3) 80%,
+                transparent 100%);
+            border-radius: 4px;
+            position: relative;
+            box-shadow: 0 0 12px rgba(139, 115, 85, 0.3);
+        }
+
+        .moving-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            animation: glideDownFull 2.4s cubic-bezier(0.45, 0.2, 0.2, 1) infinite;
+            box-shadow: 0 0 16px var(--primary-light);
+            border: 2px solid rgba(255,255,255,0.7);
+        }
+
+        .moving-dot::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: rgba(139, 115, 85, 0.2);
+            border-radius: 50%;
+            z-index: -1;
+            animation: softPulseFull 2.4s infinite;
+        }
+
+        .scroll-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary-dark);
+            font-weight: 600;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            padding: 4px 2px;
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(2px);
+            border-radius: 30px;
+        }
+
+        .indicator-inner:hover .scroll-label {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        @keyframes glideDownFull {
+            0% {
+                top: 0%;
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                top: 90%;
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1.15);
+            }
+            100% {
+                top: 0%;
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        @keyframes softPulseFull {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.8); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        /* Make the entire indicator slightly responsive */
+        @media (max-width: 900px) {
+            .scroll-indicator-full {
+                right: 20px;
+            }
+            .scroll-line-extended {
+                height: 140px;
+            }
+            .scroll-label {
+                font-size: 0.7rem;
+                letter-spacing: 3px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .scroll-indicator-full {
+                right: 12px;
+                width: 36px;
+            }
+            .scroll-line-extended {
+                height: 120px;
+            }
+            .moving-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .scroll-label {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+                padding: 4px 0;
+            }
+        }
+
         /* --- page 1 card (headline) --- */
         .headline-card {
             max-width: 880px;
@@ -105,7 +253,7 @@
             padding: 48px 48px 56px;
         }
 
-        .headline-card .pre-headline span {
+        .pre-headline span {
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 5px;
@@ -118,13 +266,13 @@
             margin-bottom: 30px;
         }
 
-        /* ----- LOGO AS ORIGINAL IMAGE (PRESERVED) ----- */
+        /* LOGO PRESERVED EXACTLY AS ORIGINAL */
         .logo-image {
             max-width: 100%;
             height: auto;
             display: block;
-            width: 240px;          /* matches previous desktop size */
-            margin: 0 auto 24px;    /* centered with bottom spacing */
+            width: 240px;
+            margin: 0 auto 24px;
         }
 
         .logo-img-placeholder {
@@ -132,21 +280,6 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-        }
-
-        /* fallback only if image missing — but we keep the original src */
-        .logo-img-placeholder .logo-image {
-            background: transparent; 
-            border-radius: 0;
-            padding: 0;
-            font-weight: normal;
-            color: inherit;
-            font-size: inherit;
-            display: block;
-        }
-        /* remove any pseudo-element that was added for placeholder text */
-        .logo-img-placeholder .logo-image::before {
-            content: none;
         }
 
         .headline-main {
@@ -165,7 +298,6 @@
             margin-top: 8px;
         }
 
-        /* message styling — clean and spacious */
         .headline-message-page {
             background: var(--white);
             border-radius: 32px;
@@ -266,7 +398,6 @@
             padding: 32px 24px;
             transition: all 0.25s ease;
             box-shadow: 0 10px 25px -8px rgba(0,0,0,0.05);
-            position: relative;
         }
         .enterprise-card-item:hover {
             transform: scale(1.02) translateY(-5px);
@@ -402,32 +533,6 @@
             100% { opacity: 1; transform: translateX(0); }
         }
 
-        /* subtle scroll hint between pages */
-        .scroll-hint {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            color: var(--primary);
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            opacity: 0.5;
-            transition: opacity 0.2s;
-            z-index: 20;
-            pointer-events: none;
-        }
-        .scroll-hint i {
-            font-size: 1.2rem;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
-
-        /* responsive grid */
         @media (max-width: 800px) {
             .enterprise-grid { grid-template-columns: 1fr; }
             .status-bar { flex-direction: column; align-items: flex-start; }
@@ -439,17 +544,24 @@
             .headline-main span { font-size: 1.8rem; }
         }
 
-        /* ensure logo stays visible and correct on small screens */
         @media (max-width: 480px) {
-            .logo-image {
-                width: 180px;
-            }
+            .logo-image { width: 180px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- PAGE 1 : HEADLINE MESSAGE (scroll‑snap) -->
+    <!-- FULL-HEIGHT SCROLL INDICATOR (extended, fixed) -->
+    <div class="scroll-indicator-full">
+        <a href="#contact-page" class="indicator-inner" id="scrollDownLink">
+            <div class="scroll-line-extended">
+                <div class="moving-dot"></div>
+            </div>
+            <span class="scroll-label">scroll</span>
+        </a>
+    </div>
+
+    <!-- PAGE 1 : HEADLINE MESSAGE -->
     <section class="snap-page" id="headline-page">
         <div class="container">
             <div class="headline-card">
@@ -457,7 +569,7 @@
                     <span>institutional launch · q3 2026</span>
                 </div>
                 
-                <!-- LOGO PRESERVED EXACTLY AS ORIGINAL (path and image) -->
+                <!-- LOGO PRESERVED EXACTLY AS ORIGINAL -->
                 <div class="logo-img-placeholder">
                     <img src="/assets/images/IMG-20251021-WA0002-removebg-preview.png" alt="ADS Fintech logo" class="logo-image">
                 </div>
@@ -467,7 +579,6 @@
                     <span>fintech platform</span>
                 </h1>
 
-                <!-- distinct message block (page 1 content) -->
                 <div class="headline-message-page">
                     <div class="message-row">
                         <i class="fa-regular fa-compass message-icon"></i>
@@ -485,19 +596,14 @@
                     </div>
                 </div>
 
-                <!-- subtle page indicator (floating) -->
                 <div style="margin-top: 48px; text-align: center; opacity: 0.4; font-size: 0.8rem; color: var(--gray-400);">
                     <span>—— page 1/2 · scroll down ——</span>
                 </div>
             </div>
         </div>
-        <div class="scroll-hint" id="hint-down">
-            <i class="fa-regular fa-hand"></i>
-            <span>scroll</span>
-        </div>
     </section>
 
-    <!-- PAGE 2 : CONTACT DETAILS (distinct page feel) -->
+    <!-- PAGE 2 : CONTACT DETAILS -->
     <section class="snap-page page-contact" id="contact-page">
         <div class="container">
             <div class="contact-card">
@@ -506,7 +612,6 @@
                 </div>
 
                 <div class="enterprise-grid">
-                    <!-- principal officer -->
                     <div class="enterprise-card-item">
                         <div class="card-icon"><i class="fas fa-user-tie"></i></div>
                         <h3>principal officer</h3>
@@ -514,7 +619,6 @@
                         <div class="detail">executive director</div>
                     </div>
 
-                    <!-- email directory -->
                     <div class="enterprise-card-item">
                         <div class="card-icon"><i class="fas fa-envelope-open-text"></i></div>
                         <h3>email directory</h3>
@@ -528,7 +632,6 @@
                         </div>
                     </div>
 
-                    <!-- direct line -->
                     <div class="enterprise-card-item">
                         <div class="card-icon"><i class="fas fa-phone-alt"></i></div>
                         <h3>direct line</h3>
@@ -538,7 +641,6 @@
                     </div>
                 </div>
 
-                <!-- status bar with badge -->
                 <div class="status-bar">
                     <div class="status-indicator">
                         <span class="status-dot"></span>
@@ -552,15 +654,9 @@
                 </div>
             </div>
         </div>
-
-        <!-- subtle up arrow hint -->
-        <div class="scroll-hint" id="hint-up">
-            <i class="fa-regular fa-circle-up"></i>
-            <span>top</span>
-        </div>
     </section>
 
-    <!-- FOOTER outside snap but still visible after second page -->
+    <!-- FOOTER -->
     <footer class="footer" id="footer-section">
         <div class="footer-container">
             <div class="footer-left">
@@ -599,27 +695,18 @@
                 phoneEl.style.cursor = 'copy';
             }
 
-            // interactive scroll hints: click to move between pages
-            const hintDown = document.getElementById('hint-down');
-            const hintUp = document.getElementById('hint-up');
-            
-            if (hintDown) {
-                hintDown.addEventListener('click', () => {
+            // Extended scroll indicator click: goes to contact page
+            const scrollLink = document.getElementById('scrollDownLink');
+            if (scrollLink) {
+                scrollLink.addEventListener('click', (e) => {
+                    e.preventDefault();
                     document.getElementById('contact-page').scrollIntoView({ behavior: 'smooth' });
                 });
-                hintDown.style.pointerEvents = 'auto';
-                hintDown.style.cursor = 'pointer';
-            }
-            
-            if (hintUp) {
-                hintUp.addEventListener('click', () => {
-                    document.getElementById('headline-page').scrollIntoView({ behavior: 'smooth' });
-                });
-                hintUp.style.pointerEvents = 'auto';
-                hintUp.style.cursor = 'pointer';
             }
 
-            console.log('📄 two‑page scroll active · logo preserved exactly as original');
+            // Also allow clicking on the footer or any back-to-top if desired (no extra needed)
+
+            console.log('📄 full‑height scroll indicator active · logo preserved');
         })();
     </script>
 </body>
