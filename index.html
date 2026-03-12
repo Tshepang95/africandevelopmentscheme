@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADS Fintech · dual‑page scroll</title>
+    <title>ADS Fintech ·</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -50,6 +50,7 @@
             position: relative;
         }
 
+        /* all three sections snap — footer is now a full snap page */
         .snap-page {
             scroll-snap-align: start;
             scroll-snap-stop: always;
@@ -469,19 +470,29 @@
 
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
 
-        /* ========== FOOTER – CENTERED RESERVED "AFRINCA" ========== */
-        .footer {
+        /* ========== FOOTER – NOW A SNAP PAGE (final stop) ========== */
+        .footer-page {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 10vh;          /* footer occupies full viewport */
+            width: 100%;
             background: var(--navy);
             color: white;
-            padding: 20px 0 16px;
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;   /* push main footer content to bottom */
             border-top: 2px solid var(--primary-dark);
         }
 
-        .footer-container {
+        /* inner footer content – centered like previous design */
+        .footer-content {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 40px 32px 24px;      /* extra top space for breathing */
+            width: 100%;
+        }
+
+        .footer-main-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -489,7 +500,6 @@
             gap: 12px 24px;
         }
 
-        /* left block – empty now, but kept for structure */
         .footer-left p { 
             color: var(--gray-400); 
             font-size: 0.9rem;
@@ -504,11 +514,11 @@
             font-weight: 600;
         }
 
-        /* reserved block – exactly in the middle column */
+        /* center reserved block */
         .footer-center {
             display: flex;
             justify-content: center;
-            flex: 1 1 auto;      /* takes available space, pushes left/right apart */
+            flex: 1 1 auto;
         }
 
         .reserved-africa {
@@ -519,7 +529,7 @@
             padding: 4px 14px 4px 8px;
             border-radius: 60px;
             border: 1px solid var(--primary-dark);
-            margin: 0 auto;        /* center within the flex column */
+            margin: 0 auto;
         }
 
         .tiny-logo {
@@ -570,27 +580,29 @@
 
         .footer-tagline { 
             text-align: center; 
-            margin-top: 16px; 
+            margin-top: 48px;            /* extra spacing before final line */
             font-size: 0.75rem; 
             color: var(--gray-500); 
             width: 100%;
             border-top: 1px solid rgba(139,115,85,0.3);
-            padding-top: 16px;
+            padding-top: 24px;
         }
 
+        /* small screen order */
         @media (max-width: 700px) {
-            .footer-container {
+            .footer-main-row {
                 flex-direction: column;
                 text-align: center;
             }
             .footer-center {
-                order: 2;          /* moves reserved block below left/right on mobile */
+                order: 2;
                 width: 100%;
             }
             .footer-left { order: 1; }
             .footer-right { order: 3; }
         }
 
+        /* page animations unchanged */
         @keyframes floatIn {
             0% { opacity: 0; transform: scale(0.96) translateY(20px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -618,9 +630,9 @@
 </head>
 <body>
 
-    <!-- FULL-HEIGHT SCROLL INDICATOR -->
+    <!-- FULL-HEIGHT SCROLL INDICATOR (scrolls all the way to footer) -->
     <div class="scroll-indicator-full">
-        <a href="#contact-page" class="indicator-inner" id="scrollDownLink">
+        <a href="#footer-page" class="indicator-inner" id="scrollDownLink">
             <div class="scroll-line-extended">
                 <div class="moving-dot"></div>
             </div>
@@ -664,7 +676,7 @@
                 </div>
 
                 <div style="margin-top: 48px; text-align: center; opacity: 0.4; font-size: 0.8rem; color: var(--gray-400);">
-                    <span>—— page 1/2 · scroll down ——</span>
+                    <span>—— page 1/3 · scroll down ——</span>
                 </div>
             </div>
         </div>
@@ -717,32 +729,34 @@
                 </div>
 
                 <div style="margin-top: 32px; text-align: center; opacity: 0.4; font-size: 0.8rem; color: var(--gray-400);">
-                    <span>—— page 2/2 · contact & legal ——</span>
+                    <span>—— page 2/3 · contact & legal ——</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER – CENTERED reserved AFRINCA + tiny logo -->
-    <footer class="footer" id="footer-section">
-        <div class="footer-container">
-            <!-- left: copyright line (short version, clean) -->
-            <div class="footer-left">
-                <p>© 2026 · <span class="company">Africa Development Scheme (Pty) ltd</span></p>
-            </div>
+    <!-- PAGE 3 : FOOTER – FINAL STOP (full viewport) with reserved AFRINCA centered -->
+    <footer class="footer-page" id="footer-page">
+        <div class="footer-content">
+            <div class="footer-main-row">
+                <!-- left: copyright -->
+                <div class="footer-left">
+                    <p>© 2026 · <span class="company">Africa Development Scheme (Pty) Ltd</span></p>
+                </div>
 
-            <!-- MIDDLE: reserved africa block – perfectly centered -->
-            
+                <!-- MIDDLE: reserved africa block – perfectly centered -->
+               
 
-            <!-- right: social icons -->
-            <div class="footer-right">
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="X platform"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <!-- right: social icons -->
+                
             </div>
-        </div>
-        <div class="footer-container footer-tagline">
-            <span>generational resonance · fintech infrastructure for africa</span>
+            <div class="footer-tagline">
+                <span>generational resonance · fintech infrastructure for africa</span>
+            </div>
+            <!-- tiny hint that this is the end -->
+            <div style="text-align: center; margin-top: 24px; opacity: 0.5; font-size: 0.7rem; color: var(--gray-500);">
+                <span>⏎ end of page · footer final</span>
+            </div>
         </div>
     </footer>
 
@@ -766,15 +780,16 @@
                 phoneEl.style.cursor = 'copy';
             }
 
+            // Scroll indicator now goes to footer page
             const scrollLink = document.getElementById('scrollDownLink');
             if (scrollLink) {
                 scrollLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    document.getElementById('contact-page').scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('footer-page').scrollIntoView({ behavior: 'smooth' });
                 });
             }
 
-            console.log('✅ reserved AFRINCA centered with tiny logo');
+            console.log('✅ Footer is the final snap page · reserved AFRINCA centered');
         })();
     </script>
 </body>
