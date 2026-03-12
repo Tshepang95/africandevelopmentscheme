@@ -50,7 +50,6 @@
             position: relative;
         }
 
-        /* two distinct pages = snap containers */
         .snap-page {
             scroll-snap-align: start;
             scroll-snap-stop: always;
@@ -93,13 +92,13 @@
             top: 0;
             right: 32px;
             width: 48px;
-            height: 100vh;              /* spans entire viewport height */
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;     /* centers the line + dot vertically */
+            justify-content: center;
             z-index: 1000;
-            pointer-events: none;        /* allows clicking through to content, but anchor inside is clickable */
+            pointer-events: none;
         }
 
         .indicator-inner {
@@ -107,7 +106,7 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            pointer-events: auto;        /* makes the link clickable */
+            pointer-events: auto;
             cursor: pointer;
             transition: transform 0.2s ease;
             padding: 20px 0;
@@ -120,7 +119,7 @@
 
         .scroll-line-extended {
             width: 2px;
-            height: 160px;                /* tall line — feels like a scroll tracker */
+            height: 160px;
             background: linear-gradient(180deg, 
                 var(--primary) 0%, 
                 var(--primary-light) 40%, 
@@ -180,21 +179,9 @@
         }
 
         @keyframes glideDownFull {
-            0% {
-                top: 0%;
-                opacity: 1;
-                transform: translateX(-50%) scale(1);
-            }
-            50% {
-                top: 90%;
-                opacity: 0.9;
-                transform: translateX(-50%) scale(1.15);
-            }
-            100% {
-                top: 0%;
-                opacity: 1;
-                transform: translateX(-50%) scale(1);
-            }
+            0% { top: 0%; opacity: 1; transform: translateX(-50%) scale(1); }
+            50% { top: 90%; opacity: 0.9; transform: translateX(-50%) scale(1.15); }
+            100% { top: 0%; opacity: 1; transform: translateX(-50%) scale(1); }
         }
 
         @keyframes softPulseFull {
@@ -203,37 +190,17 @@
             100% { transform: scale(1); opacity: 0.3; }
         }
 
-        /* Make the entire indicator slightly responsive */
         @media (max-width: 900px) {
-            .scroll-indicator-full {
-                right: 20px;
-            }
-            .scroll-line-extended {
-                height: 140px;
-            }
-            .scroll-label {
-                font-size: 0.7rem;
-                letter-spacing: 3px;
-            }
+            .scroll-indicator-full { right: 20px; }
+            .scroll-line-extended { height: 140px; }
+            .scroll-label { font-size: 0.7rem; letter-spacing: 3px; }
         }
 
         @media (max-width: 600px) {
-            .scroll-indicator-full {
-                right: 12px;
-                width: 36px;
-            }
-            .scroll-line-extended {
-                height: 120px;
-            }
-            .moving-dot {
-                width: 10px;
-                height: 10px;
-            }
-            .scroll-label {
-                font-size: 0.6rem;
-                letter-spacing: 2px;
-                padding: 4px 0;
-            }
+            .scroll-indicator-full { right: 12px; width: 36px; }
+            .scroll-line-extended { height: 120px; }
+            .moving-dot { width: 10px; height: 10px; }
+            .scroll-label { font-size: 0.6rem; letter-spacing: 2px; padding: 4px 0; }
         }
 
         /* --- page 1 card (headline) --- */
@@ -266,7 +233,6 @@
             margin-bottom: 30px;
         }
 
-        /* LOGO PRESERVED EXACTLY AS ORIGINAL */
         .logo-image {
             max-width: 100%;
             height: auto;
@@ -503,11 +469,15 @@
 
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
 
+        /* ========== FOOTER – CENTERED RESERVED "AFRINCA" ========== */
         .footer {
             background: var(--navy);
             color: white;
-            padding: 24px 0;
+            padding: 20px 0 16px;
+            width: 100%;
+            border-top: 2px solid var(--primary-dark);
         }
+
         .footer-container {
             max-width: 1280px;
             margin: 0 auto;
@@ -516,13 +486,110 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px 24px;
         }
-        .footer-left p { color: var(--gray-400); }
-        .company { color: var(--primary-light); font-weight: 600; }
-        .footer-right a { color: var(--gray-400); margin-left: 24px; font-size: 1.2rem; transition: color 0.2s; }
-        .footer-right a:hover { color: var(--primary-light); }
-        .footer-tagline { text-align: center; margin-top: 8px; font-size: 0.8rem; color: var(--gray-500); }
+
+        /* left block – empty now, but kept for structure */
+        .footer-left p { 
+            color: var(--gray-400); 
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .company { 
+            color: var(--primary-light); 
+            font-weight: 600;
+        }
+
+        /* reserved block – exactly in the middle column */
+        .footer-center {
+            display: flex;
+            justify-content: center;
+            flex: 1 1 auto;      /* takes available space, pushes left/right apart */
+        }
+
+        .reserved-africa {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.02);
+            padding: 4px 14px 4px 8px;
+            border-radius: 60px;
+            border: 1px solid var(--primary-dark);
+            margin: 0 auto;        /* center within the flex column */
+        }
+
+        .tiny-logo {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+            box-shadow: 0 0 6px var(--primary-light);
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        .tiny-logo span {
+            transform: scale(0.8);
+            letter-spacing: 1px;
+        }
+
+        .reserved-text {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray-300);
+            font-weight: 400;
+        }
+        .reserved-text strong {
+            color: white;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .footer-right a { 
+            color: var(--gray-400); 
+            font-size: 1.2rem; 
+            transition: color 0.2s; 
+        }
+        .footer-right a:hover { 
+            color: var(--primary-light); 
+        }
+
+        .footer-tagline { 
+            text-align: center; 
+            margin-top: 16px; 
+            font-size: 0.75rem; 
+            color: var(--gray-500); 
+            width: 100%;
+            border-top: 1px solid rgba(139,115,85,0.3);
+            padding-top: 16px;
+        }
+
+        @media (max-width: 700px) {
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-center {
+                order: 2;          /* moves reserved block below left/right on mobile */
+                width: 100%;
+            }
+            .footer-left { order: 1; }
+            .footer-right { order: 3; }
+        }
 
         @keyframes floatIn {
             0% { opacity: 0; transform: scale(0.96) translateY(20px); }
@@ -551,7 +618,7 @@
 </head>
 <body>
 
-    <!-- FULL-HEIGHT SCROLL INDICATOR (extended, fixed) -->
+    <!-- FULL-HEIGHT SCROLL INDICATOR -->
     <div class="scroll-indicator-full">
         <a href="#contact-page" class="indicator-inner" id="scrollDownLink">
             <div class="scroll-line-extended">
@@ -569,7 +636,7 @@
                     <span>institutional launch · q3 2026</span>
                 </div>
                 
-                <!-- LOGO PRESERVED EXACTLY AS ORIGINAL -->
+                <!-- LARGE LOGO (preserved) -->
                 <div class="logo-img-placeholder">
                     <img src="/assets/images/IMG-20251021-WA0002-removebg-preview.png" alt="ADS Fintech logo" class="logo-image">
                 </div>
@@ -656,12 +723,18 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER – CENTERED reserved AFRINCA + tiny logo -->
     <footer class="footer" id="footer-section">
         <div class="footer-container">
+            <!-- left: copyright line (short version, clean) -->
             <div class="footer-left">
-                <p>© 2026 · all rights reserved by <span class="company">African Development Scheme (Pty) Ltd</span></p>
+                <p>© 2026 · <span class="company">Africa Development Scheme (Pty) ltd</span></p>
             </div>
+
+            <!-- MIDDLE: reserved africa block – perfectly centered -->
+            
+
+            <!-- right: social icons -->
             <div class="footer-right">
                 <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 <a href="#" aria-label="X platform"><i class="fab fa-x-twitter"></i></a>
@@ -675,7 +748,6 @@
 
     <script>
         (function() {
-            // email click to mailto
             document.querySelectorAll('.email-item').forEach(el => {
                 const email = el.getAttribute('data-email') || el.innerText.trim();
                 el.addEventListener('click', (e) => {
@@ -684,7 +756,6 @@
                 });
             });
 
-            // phone copy
             const phoneEl = document.getElementById('phoneValue');
             if (phoneEl) {
                 phoneEl.addEventListener('click', () => {
@@ -695,7 +766,6 @@
                 phoneEl.style.cursor = 'copy';
             }
 
-            // Extended scroll indicator click: goes to contact page
             const scrollLink = document.getElementById('scrollDownLink');
             if (scrollLink) {
                 scrollLink.addEventListener('click', (e) => {
@@ -704,9 +774,7 @@
                 });
             }
 
-            // Also allow clicking on the footer or any back-to-top if desired (no extra needed)
-
-            console.log('📄 full‑height scroll indicator active · logo preserved');
+            console.log('✅ reserved AFRINCA centered with tiny logo');
         })();
     </script>
 </body>
